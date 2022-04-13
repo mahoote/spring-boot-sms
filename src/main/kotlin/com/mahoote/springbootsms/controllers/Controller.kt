@@ -5,6 +5,7 @@ import com.mahoote.springbootsms.service.Service
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.*
+import javax.servlet.http.HttpServletRequest
 
 @RestController
 @RequestMapping("api/v1")
@@ -16,8 +17,8 @@ class Controller(@Autowired private val service: Service) {
     }
 
     @PostMapping("/receive")
-    fun receiveSms(@RequestBody array: Array<String>) {
-        service.receiveSms(array)
+    fun receiveSms(@RequestBody request: HttpServletRequest) {
+        service.receiveSms(request)
     }
 
 

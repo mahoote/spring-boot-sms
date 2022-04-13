@@ -10,6 +10,7 @@ import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
+import javax.servlet.http.HttpServletRequest
 
 @Service("twilio")
 class TwilioSmsSender(
@@ -33,8 +34,8 @@ class TwilioSmsSender(
         }
     }
 
-    override fun receiveSms(array: Array<String>) {
-        LOGGER.info("Receive sms {}", array)
+    override fun receiveSms(request: HttpServletRequest) {
+        LOGGER.info("Receive sms {}", request)
     }
 
     private fun isPhoneNumberValid(phoneNumber: String): Boolean {
