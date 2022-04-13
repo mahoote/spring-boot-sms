@@ -1,20 +1,20 @@
-version: '3.1'
-services:
-  postgres-db:
-    container_name: 'postgres-db'
-    image: postgres:alpine
-    ports:
-      - '5432:5432'
-    environment:
-      - POSTGRES_DB=smsdevdb
-      - POSTGRES_USER=smsdevuser
-      - POSTGRES_PASSWORD=password
-  postgres-junit-db:
-    container_name: 'postgres-junit-db'
-    image: postgres:alpine
-    ports:
-      - '5433:5433'
-    environment:
-      - POSTGRES_DB=smsdevdb
-      - POSTGRES_USER=smsdevuser
-      - POSTGRES_PASSWORD=password
+#version: '3.1'
+#services:
+#  postgres-db:
+#    container_name: 'postgres-db'
+#    image: postgres:alpine
+#    ports:
+#      - '5432:5432'
+#    environment:
+#      - POSTGRES_DB=d78muspcfcuch3
+#      - POSTGRES_USER=lvknrvthpiyurc
+#      - POSTGRES_PASSWORD=e8e1a806c73bc35b3258778acaab6174c90e78bc94b0e55faddb458363d60a1e
+#  postgres-junit-db:
+#    container_name: 'postgres-junit-db'
+#    image: postgres:alpine
+#    ports:
+#      - '5433:5433'
+#    environment:
+#      - POSTGRES_DB=d78muspcfcuch3
+#      - POSTGRES_USER=lvknrvthpiyurc
+#      - POSTGRES_PASSWORD=e8e1a806c73bc35b3258778acaab6174c90e78bc94b0e55faddb458363d60a1e
