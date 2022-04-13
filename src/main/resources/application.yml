@@ -1,0 +1,21 @@
+spring:
+  jpa:
+    database: POSTGRESQL
+    show-sql: true
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+  datasource:
+    url: jdbc:postgresql://localhost:5432/smsdevdb
+    username: smsdevuser
+    password: password
+    driverClassName: org.postgresql.Driver
+  sql:
+    init:
+      platform: smsdevdb
+twilio:
+  account_sid: ACaff272610c2fab8111f663210b7a4c3e
+  auth_token: 08d82281d67c6b700df0a82bc32e06ca
+  trial_number: +15404538430
