@@ -16,8 +16,8 @@ class Controller(@Autowired private val service: Service) {
     }
 
     @PostMapping("/receive")
-    fun receiveSms(@Validated @RequestBody smsRequest: SmsRequest) {
-        service.receiveSms(smsRequest)
+    fun receiveSms(@RequestBody map: Map<String, String>) {
+        service.receiveSms(map)
     }
 
 
