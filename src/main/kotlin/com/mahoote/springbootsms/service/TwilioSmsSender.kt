@@ -1,6 +1,6 @@
 package com.mahoote.springbootsms.service
 
-import com.mahoote.springbootsms.SmsSender
+import com.mahoote.springbootsms.repos.SmsSender
 import com.mahoote.springbootsms.configuration.TwilioConfig
 import com.mahoote.springbootsms.configuration.TwilioInitializer
 import com.mahoote.springbootsms.models.SmsRequest
@@ -11,8 +11,7 @@ import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 
-
-@Service
+@Service("twilio")
 class TwilioSmsSender(
     @Autowired private var twilioConfig: TwilioConfig
 ): SmsSender {

@@ -1,4 +1,4 @@
-package com.mahoote.springbootsms
+package com.mahoote.springbootsms.repos
 
 import com.mahoote.springbootsms.models.SmsRequest
 
