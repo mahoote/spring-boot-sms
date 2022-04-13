@@ -10,13 +10,13 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
   datasource:
-    url: jdbc:postgresql://ec2-99-80-170-190.eu-west-1.compute.amazonaws.com:5432/d78muspcfcuch3
-    username: lvknrvthpiyurc
-    password: e8e1a806c73bc35b3258778acaab6174c90e78bc94b0e55faddb458363d60a1e
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://ec2-99-80-170-190.eu-west-1.compute.amazonaws.com:5432/d78muspcfcuch3}
+    username: ${SPRING_DATASOURCE_USERNAME:lvknrvthpiyurc}
+    password: ${SPRING_DATASOURCE_PASSWORD:e8e1a806c73bc35b3258778acaab6174c90e78bc94b0e55faddb458363d60a1e}
     driverClassName: org.postgresql.Driver
   sql:
     init:
-      platform: d78muspcfcuch3
+      platform: ${SPRING_JPA_DATABASE-PLATFORM:d78muspcfcuch3}
 twilio:
   account_sid: ACaff272610c2fab8111f663210b7a4c3e
   auth_token: 08d82281d67c6b700df0a82bc32e06ca
