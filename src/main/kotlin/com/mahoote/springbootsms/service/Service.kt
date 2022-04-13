@@ -13,8 +13,8 @@ class Service (@Qualifier("twilio") @Autowired private val smsSender: SmsSender)
         smsSender.sendSms(smsRequest)
     }
 
-    fun receiveSms(map: Map<String, String>) {
-        smsSender.receiveSms(map)
+    fun receiveSms(array: Array<String>) {
+        smsSender.receiveSms(array)
     }
 
 }
