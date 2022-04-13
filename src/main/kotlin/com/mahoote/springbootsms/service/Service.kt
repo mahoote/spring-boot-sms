@@ -13,4 +13,8 @@ class Service (@Qualifier("twilio") @Autowired private val smsSender: SmsSender)
         smsSender.sendSms(smsRequest)
     }
 
+    fun receiveSms(smsRequest: SmsRequest) {
+        smsSender.receiveSms(smsRequest)
+    }
+
 }

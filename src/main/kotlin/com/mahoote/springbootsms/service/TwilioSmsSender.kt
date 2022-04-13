@@ -26,11 +26,15 @@ class TwilioSmsSender(
             val message = smsRequest.message
             val creator = Message.creator(to, from, message)
             creator.create()
-            LOGGER.info("Send sms {} $smsRequest")
+            LOGGER.info("Send sms {}", smsRequest)
 
         } else {
             throw IllegalArgumentException("Phone number [${smsRequest.phoneNumber}] is not valid.")
         }
+    }
+
+    override fun receiveSms(smsRequest: SmsRequest) {
+        LOGGER.info("Receive sms {}", smsRequest)
     }
 
     private fun isPhoneNumberValid(phoneNumber: String): Boolean {

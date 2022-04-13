@@ -7,7 +7,7 @@ import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.*
 
 @RestController
-@RequestMapping("api/v1/sms")
+@RequestMapping("api/v1")
 class Controller(@Autowired private val service: Service) {
 
     @GetMapping
@@ -15,7 +15,13 @@ class Controller(@Autowired private val service: Service) {
         return "It worked!"
     }
 
-    @PostMapping
+    @PostMapping("/receive")
+    fun receiveSms(@Validated @RequestBody smsRequest: SmsRequest) {
+        service.receiveSms(smsRequest)
+    }
+
+
+    @PostMapping("/send")
     fun sendSms(@Validated @RequestBody smsRequest: SmsRequest) {
         service.sendSms(smsRequest)
     }

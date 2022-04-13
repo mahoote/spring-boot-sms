@@ -6,4 +6,6 @@ interface SmsSender {
 
     fun sendSms(smsRequest: SmsRequest)
 
+    fun receiveSms(smsRequest: SmsRequest)
+
 }
