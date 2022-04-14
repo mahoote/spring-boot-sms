@@ -7,9 +7,9 @@ import org.springframework.stereotype.Service
 @Service
 class QuestionService(@Autowired private val questionRepo: QuestionRepo) {
 
-    fun reply(body: String?): String {
+    fun reply(body: String?): String? {
         val question = questionRepo.findByKeyWord(body)
-        return question.question
+        return question?.question
     }
 
 }

@@ -7,6 +7,6 @@ import org.springframework.stereotype.Repository
 @Repository
 interface QuestionRepo: JpaRepository<QuestionEntity, Long> {
 
-    fun findByKeyWord(keyWord: String?): QuestionEntity
+    fun findByKeyWord(keyWord: String?): QuestionEntity?
 
 }

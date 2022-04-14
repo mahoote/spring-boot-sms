@@ -27,7 +27,7 @@ class TwilioSmsReceiver(
 
     private fun reply(body: String?, from: String?) {
         val question = questionService.reply(body)
-        if(from != null) {
+        if(question != null && from != null) {
             val smsRequest = SmsRequest(phoneNumber = from, message = question)
             smsSender.sendSms(smsRequest)
         }
