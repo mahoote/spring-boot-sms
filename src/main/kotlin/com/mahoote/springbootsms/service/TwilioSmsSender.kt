@@ -10,9 +10,8 @@ import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
-import javax.servlet.http.HttpServletRequest
 
-@Service("twilio")
+@Service("twilioSender")
 class TwilioSmsSender(
     @Autowired private var twilioConfig: TwilioConfig
 ): SmsSender {
@@ -32,10 +31,6 @@ class TwilioSmsSender(
         } else {
             throw IllegalArgumentException("Phone number [${smsRequest.phoneNumber}] is not valid.")
         }
-    }
-
-    override fun receiveSms(map: Map<String, String>) {
-        LOGGER.info("Receive sms {}", map)
     }
 
     private fun isPhoneNumberValid(phoneNumber: String): Boolean {
