@@ -8,5 +8,5 @@ import org.springframework.context.annotation.Configuration
 data class TwilioConfig (
     var accountSid: String = "",
     var authToken: String = "",
-    var trialNumber: String = ""
+    var phoneNumber: String = ""
 )

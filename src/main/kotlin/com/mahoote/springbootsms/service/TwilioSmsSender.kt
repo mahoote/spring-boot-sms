@@ -22,7 +22,7 @@ class TwilioSmsSender(
         if(isPhoneNumberValid(smsRequest.phoneNumber)) {
 
             val to = PhoneNumber(smsRequest.phoneNumber)
-            val from = PhoneNumber(twilioConfig.trialNumber)
+            val from = PhoneNumber(twilioConfig.phoneNumber)
             val message = smsRequest.message
             val creator = Message.creator(to, from, message)
             creator.create()
