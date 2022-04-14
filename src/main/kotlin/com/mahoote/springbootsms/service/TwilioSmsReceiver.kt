@@ -17,11 +17,10 @@ class TwilioSmsReceiver(
     private val LOGGER: Logger = LoggerFactory.getLogger(TwilioInitializer::class.java)
 
     override fun receiveSms(requestMap: Map<String, String>) {
-        LOGGER.info("Receive sms {}", requestMap)
         val body: String? = requestMap.get("Body") // The text.
         val from: String? = requestMap.get("From") // The senders phone number.
 
-        LOGGER.info("Body: $body, From: $from")
+        LOGGER.info("SMS received from {} with body: {}", from, body)
         reply(body, from)
     }
 
