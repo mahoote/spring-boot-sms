@@ -13,7 +13,7 @@ class QuestionServiceUnitTest {
     private val questionService = QuestionService(questionRepo)
 
     @Test
-    fun shouldGetQuestionStringByKeyWord() {
+    fun shouldGetQuestionByKeyWord() {
         val q = "Is it working?"
         val keyWord = "Work"
 
@@ -23,8 +23,20 @@ class QuestionServiceUnitTest {
             exQuestion
         }
 
-        val question = questionService.reply(keyWord)
-        assert(question == q)
+        val question = questionService.getQuestionByKeyWord(keyWord)
+        assert(question == exQuestion)
+    }
+
+    @Test
+    fun shouldFailToGetQuestionByKeyWord() {
+        val wrongKeyWord = "Don't Work"
+
+        every { questionRepo.findByKeyWord(wrongKeyWord) } answers {
+            null
+        }
+
+        val question = questionService.getQuestionByKeyWord(wrongKeyWord)
+        assert(question == null)
     }
 
 }

@@ -25,11 +25,19 @@ class TwilioSmsReceiver(
     }
 
     private fun reply(body: String?, from: String?) {
-        val question = questionService.reply(body)
-        if(question != null && from != null) {
-            val smsRequest = SmsRequest(phoneNumber = from, message = question)
-            smsSender.sendSms(smsRequest)
+        val question = questionService.getQuestionByKeyWord(body)?.question
+
+        if(from != null ) {
+            if(question != null) {
+                val smsRequest = SmsRequest(phoneNumber = from, message = question)
+                smsSender.sendSms(smsRequest)
+            } else {
+                val errorMessage = "I'm sorry, but im not sure what to do. Maybe you should try something else?"
+                val smsRequest = SmsRequest(phoneNumber = from, message = errorMessage)
+                smsSender.sendSms(smsRequest)
+            }
         }
+
     }
 
 }
