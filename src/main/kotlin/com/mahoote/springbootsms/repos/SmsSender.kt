@@ -7,6 +7,6 @@ interface SmsSender {
 
     fun sendSms(smsRequest: SmsRequest)
 
-    fun receiveSms(request: HttpServletRequest)
+    fun receiveSms(map: Map<String, String>)
 
 }

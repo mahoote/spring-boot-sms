@@ -18,8 +18,8 @@ class Controller(@Autowired private val service: Service) {
     }
 
     @PostMapping(value = ["/receive"], consumes = [MediaType.APPLICATION_FORM_URLENCODED_VALUE], produces = [MediaType.APPLICATION_ATOM_XML_VALUE])
-    fun receiveSms(@RequestBody request: HttpServletRequest) {
-        service.receiveSms(request)
+    fun receiveSms(@RequestParam map: Map<String, String>) {
+        service.receiveSms(map)
     }
 
 

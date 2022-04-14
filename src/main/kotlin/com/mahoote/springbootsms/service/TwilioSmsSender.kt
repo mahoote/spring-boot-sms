@@ -34,8 +34,8 @@ class TwilioSmsSender(
         }
     }
 
-    override fun receiveSms(request: HttpServletRequest) {
-        LOGGER.info("Receive sms {}", request)
+    override fun receiveSms(map: Map<String, String>) {
+        LOGGER.info("Receive sms {}", map)
     }
 
     private fun isPhoneNumberValid(phoneNumber: String): Boolean {
