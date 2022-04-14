@@ -13,6 +13,10 @@ class TwilioSmsReceiver: SmsReceiver {
 
     override fun receiveSms(requestMap: Map<String, String>) {
         LOGGER.info("Receive sms {}", requestMap)
+        val body = requestMap.get("Body") // The text.
+        val from = requestMap.get("From") // The senders phone number.
+
+        LOGGER.info("Body: $body, From: $from")
     }
 
 }
