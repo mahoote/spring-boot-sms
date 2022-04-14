@@ -20,6 +20,7 @@ class TwilioSmsReceiver(
         val body: String? = requestMap.get("Body") // The text.
         val from: String? = requestMap.get("From") // The senders phone number.
 
+        LOGGER.info("SMS received from {} with body: {}", from, body)
         reply(body, from)
     }
 
