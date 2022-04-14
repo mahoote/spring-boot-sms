@@ -18,6 +18,6 @@ spring:
     init:
       platform: d78muspcfcuch3
 twilio:
-  account_sid: ACaff272610c2fab8111f663210b7a4c3e
+  account_sid: ${TWILIO_ACCOUNT_SID}
   auth_token: ${TWILIO_AUTH_TOKEN}
-  trial_number: +15404538430
+  trial_number: ${TWILIO_PHONE_NUMBER}
