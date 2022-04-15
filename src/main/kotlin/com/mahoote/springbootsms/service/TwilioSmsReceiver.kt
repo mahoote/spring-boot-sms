@@ -36,21 +36,11 @@ class TwilioSmsReceiver(
 
             with(text) {
                 when {
-                    equals("#REGISTER_ME") -> {
+                    equals("#REGISTERME", ignoreCase = true) -> {
                         smsRequest = registerUser(number, smsRequest, errorMessage)
                     }
                     this?.startsWith("@ALL:") == true -> {
-                        val keyWord = text?.substring(5)?.trim()
-                        val question = questionService.getQuestionByKeyWord(keyWord)?.question
-                        val users = userService.getUsers()
-
-                        question?.let { q ->
-                            for(user in users) {
-                                smsRequest = SmsRequest(phoneNumber = user.phoneNumber, message = q)
-                                senderService.sendSms(smsRequest)
-                            }
-                        }
-
+                        smsAll(text, smsRequest)
                     }
                     else -> {
                         val question = questionService.getQuestionByKeyWord(text?.trim())?.question
@@ -64,6 +54,20 @@ class TwilioSmsReceiver(
             }
 
             senderService.sendSms(smsRequest)
+        }
+    }
+
+    private fun smsAll(text: String?, smsRequest: SmsRequest) {
+        var smsRequest1 = smsRequest
+        val keyWord = text?.substring(5)?.trim()
+        val question = questionService.getQuestionByKeyWord(keyWord)?.question
+        val users = userService.getUsers()
+
+        question?.let { q ->
+            for (user in users) {
+                smsRequest1 = SmsRequest(phoneNumber = user.phoneNumber, message = q)
+                senderService.sendSms(smsRequest1)
+            }
         }
     }
 
