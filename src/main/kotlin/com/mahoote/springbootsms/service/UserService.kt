@@ -18,6 +18,10 @@ class UserService(@Autowired private val userRepo: UserRepo) {
         return validateUser(user)
     }
 
+    fun saveUser(user: UserEntity) {
+        userRepo.save(user)
+    }
+
     private fun validateUser(user: UserEntity?): UserEntity? {
         if(user != null && validatePhoneNumber(user.phoneNumber))
             return user

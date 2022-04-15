@@ -3,6 +3,7 @@ package com.mahoote.springbootsms.models.entities
 import javax.persistence.*
 
 @Entity
+@Table(name = "users")
 data class UserEntity (
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "users_user_id_seq")
