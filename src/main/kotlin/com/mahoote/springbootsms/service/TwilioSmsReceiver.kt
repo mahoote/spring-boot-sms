@@ -38,7 +38,7 @@ class TwilioSmsReceiver(
                 if(userService.getUserByPhoneNumber(number) == null) {
                     userService.saveUser(UserEntity(phoneNumber = number))
                     val confirmMessage = "User registered!"
-                    SmsRequest(phoneNumber = number, message = confirmMessage)
+                    smsRequest = SmsRequest(phoneNumber = number, message = confirmMessage)
                 }
             } else {
                 val question = questionService.getQuestionByKeyWord(text)?.question
