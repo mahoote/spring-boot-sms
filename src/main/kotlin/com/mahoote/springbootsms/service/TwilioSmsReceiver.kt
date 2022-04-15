@@ -40,8 +40,15 @@ class TwilioSmsReceiver(
                         smsRequest = registerUser(number, smsRequest, errorMessage)
                     }
                     this?.startsWith("@ALL:") == true -> {
-                        val keyWord = text?.substring(5)
-                        smsRequest = SmsRequest(phoneNumber = number, message = keyWord!!)
+                        val keyWord = text?.substring(5)?.trim()
+                        val question = questionService.getQuestionByKeyWord(keyWord)?.question
+                        val users = userService.getUsers()
+
+                        for(user in users) {
+                            question?.let { q ->
+                                smsRequest = SmsRequest(phoneNumber = user.phoneNumber, message = q)
+                            }
+                        }
                     }
                     else -> {
                         val question = questionService.getQuestionByKeyWord(text)?.question
