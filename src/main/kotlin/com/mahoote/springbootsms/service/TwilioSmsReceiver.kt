@@ -40,6 +40,7 @@ class TwilioSmsReceiver(
                     equals("#REGISTERME", ignoreCase = true) -> {
                         smsRequest = registerUser(number, smsRequest, errorMessage)
                     }
+                    // Delete user from users table.
                     equals("#DELETEME", ignoreCase = true) -> {
                         val user = userService.getUserByPhoneNumber(number)
                         user?.let {
@@ -50,7 +51,10 @@ class TwilioSmsReceiver(
                     // Message all users.
                     this?.startsWith("@ALL:") == true -> {
                         smsAll(text, smsRequest)
+                        // Empty request.
+                        smsRequest = SmsRequest(number, "")
                     }
+                    // Print all tables.
                     equals("@STATUS") -> {
                         smsRequest = statusMessage(number)
                     }
@@ -66,7 +70,8 @@ class TwilioSmsReceiver(
                 }
             }
 
-            senderService.sendSms(smsRequest)
+            if(smsRequest.message != "")
+                senderService.sendSms(smsRequest)
         }
     }
 
