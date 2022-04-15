@@ -36,12 +36,21 @@ class TwilioSmsReceiver(
 
             with(text) {
                 when {
+                    // Register new user.
                     equals("#REGISTERME", ignoreCase = true) -> {
                         smsRequest = registerUser(number, smsRequest, errorMessage)
                     }
+                    equals("#DELETEME", ignoreCase = true) -> {
+                        // TODO: Add delete function.
+                    }
+                    // Message all users.
                     this?.startsWith("@ALL:") == true -> {
                         smsAll(text, smsRequest)
                     }
+                    equals("@STATUS") -> {
+                        smsRequest = statusMessage(number)
+                    }
+                    // Check the database for keyWords.
                     else -> {
                         val question = questionService.getQuestionByKeyWord(text?.trim())?.question
 
@@ -55,6 +64,18 @@ class TwilioSmsReceiver(
 
             senderService.sendSms(smsRequest)
         }
+    }
+
+    private fun statusMessage(number: String): SmsRequest {
+        val userSize = userService.getUsers().size
+        val questionSize = questionService.getAllQuestions().size
+
+        val statusMessage =
+            "STATUS: 200 ok\n" +
+            "Users: $userSize\n" +
+            "Questions: $questionSize"
+
+        return SmsRequest(phoneNumber = number, message = statusMessage)
     }
 
     private fun smsAll(text: String?, smsRequest: SmsRequest) {

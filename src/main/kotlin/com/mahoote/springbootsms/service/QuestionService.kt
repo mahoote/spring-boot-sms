@@ -12,4 +12,8 @@ class QuestionService(@Autowired private val questionRepo: QuestionRepo) {
         return questionRepo.findByKeyWord(body)
     }
 
+    fun getAllQuestions(): MutableList<QuestionEntity> {
+        return questionRepo.findAll()
+    }
+
 }
