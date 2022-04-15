@@ -29,10 +29,15 @@ class QuestionServiceUnitTest {
 
     @Test
     fun shouldFailToGetQuestionByKeyWord() {
+        val q = "Is it working?"
+        val correctKeyWord = "Work"
         val wrongKeyWord = "Don't Work"
 
-        every { questionRepo.findByKeyWord(wrongKeyWord) } answers {
-            null
+        val exQuestion = QuestionEntity(id = 1, question = q, keyWord = correctKeyWord)
+
+
+        every { questionRepo.findByKeyWord(any()) } answers {
+            if(valueAny == exQuestion.keyWord) exQuestion else null
         }
 
         val question = questionService.getQuestionByKeyWord(wrongKeyWord)
