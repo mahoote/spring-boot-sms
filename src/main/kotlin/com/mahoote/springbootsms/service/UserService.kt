@@ -22,6 +22,10 @@ class UserService(@Autowired private val userRepo: UserRepo) {
         userRepo.save(user)
     }
 
+    fun deleteUser(user: UserEntity) {
+        user.id?.let { userRepo.deleteById(it) }
+    }
+
     private fun validateUser(user: UserEntity?): UserEntity? {
         if(user != null && validatePhoneNumber(user.phoneNumber))
             return user

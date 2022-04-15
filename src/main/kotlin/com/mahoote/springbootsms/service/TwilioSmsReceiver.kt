@@ -31,7 +31,7 @@ class TwilioSmsReceiver(
         from?.let { number ->
             val text = body?.trim()
 
-            var errorMessage = "I'm sorry, but im not sure what to do. Maybe you should try something else?"
+            var errorMessage = "Beklager, men jeg skjønner ikke hva du mener. Kanskje prøve noe annet?"
             var smsRequest = SmsRequest(phoneNumber = number, message = errorMessage)
 
             with(text) {
@@ -41,7 +41,11 @@ class TwilioSmsReceiver(
                         smsRequest = registerUser(number, smsRequest, errorMessage)
                     }
                     equals("#DELETEME", ignoreCase = true) -> {
-                        // TODO: Add delete function.
+                        val user = userService.getUserByPhoneNumber(number)
+                        user?.let {
+                            userService.deleteUser(it)
+                            smsRequest = SmsRequest(number, "Dette nummeret har blitt slettet fra vår database.")
+                        }
                     }
                     // Message all users.
                     this?.startsWith("@ALL:") == true -> {
@@ -72,8 +76,8 @@ class TwilioSmsReceiver(
 
         val statusMessage =
             "STATUS: 200 ok\n" +
-            "Users: $userSize\n" +
-            "Questions: $questionSize"
+            "Brukere: $userSize\n" +
+            "Spørsmål: $questionSize"
 
         return SmsRequest(phoneNumber = number, message = statusMessage)
     }
@@ -101,10 +105,10 @@ class TwilioSmsReceiver(
         var errorMessage1 = errorMessage
         if (userService.getUserByPhoneNumber(number) == null) {
             userService.saveUser(UserEntity(phoneNumber = number))
-            val confirmMessage = "You are now registered!"
+            val confirmMessage = "Du er nå registrert!"
             smsRequest1 = SmsRequest(phoneNumber = number, message = confirmMessage)
         } else {
-            errorMessage1 = "You have already been registered!"
+            errorMessage1 = "Du er allerede registrert."
             smsRequest1 = SmsRequest(phoneNumber = number, message = errorMessage1)
         }
         return smsRequest1
