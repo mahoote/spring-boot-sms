@@ -46,8 +46,8 @@ class TwilioSmsReceiver(
 
                         question?.let { q ->
                             for(user in users) {
-                                LOGGER.info("All Users: $user")
                                 smsRequest = SmsRequest(phoneNumber = user.phoneNumber, message = q)
+                                senderService.sendSms(smsRequest)
                             }
                         }
 
