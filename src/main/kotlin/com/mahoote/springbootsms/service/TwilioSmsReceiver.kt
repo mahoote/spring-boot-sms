@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service
 @Service("twilioReceiver")
 class TwilioSmsReceiver(
     @Autowired private val questionService: QuestionService,
-    @Autowired private val smsSender: TwilioSmsSender
+    @Autowired private val senderService: SenderService
     ): SmsReceiver {
 
     private val LOGGER: Logger = LoggerFactory.getLogger(TwilioInitializer::class.java)
@@ -30,11 +30,11 @@ class TwilioSmsReceiver(
         if(from != null ) {
             if(question != null) {
                 val smsRequest = SmsRequest(phoneNumber = from, message = question)
-                smsSender.sendSms(smsRequest)
+                senderService.sendSms(smsRequest)
             } else {
                 val errorMessage = "I'm sorry, but im not sure what to do. Maybe you should try something else?"
                 val smsRequest = SmsRequest(phoneNumber = from, message = errorMessage)
-                smsSender.sendSms(smsRequest)
+                senderService.sendSms(smsRequest)
             }
         }
 

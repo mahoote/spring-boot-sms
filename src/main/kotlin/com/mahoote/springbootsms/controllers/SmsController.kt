@@ -9,9 +9,9 @@ import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.*
 
 @RestController
-@RequestMapping("api/v1")
-class Controller(@Autowired private val senderService: SenderService,
-                 @Autowired private val receiverService: ReceiverService) {
+@RequestMapping("api/v1/sms")
+class SmsController(@Autowired private val senderService: SenderService,
+                    @Autowired private val receiverService: ReceiverService) {
 
     @GetMapping
     fun testGet(): String {
