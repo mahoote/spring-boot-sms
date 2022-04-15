@@ -44,11 +44,14 @@ class TwilioSmsReceiver(
                         val question = questionService.getQuestionByKeyWord(keyWord)?.question
                         val users = userService.getUsers()
 
-                        for(user in users) {
-                            question?.let { q ->
+                        LOGGER.info(users.toString())
+
+                        question?.let { q ->
+                            for(user in users) {
                                 smsRequest = SmsRequest(phoneNumber = user.phoneNumber, message = q)
                             }
                         }
+
                     }
                     else -> {
                         val question = questionService.getQuestionByKeyWord(text)?.question
