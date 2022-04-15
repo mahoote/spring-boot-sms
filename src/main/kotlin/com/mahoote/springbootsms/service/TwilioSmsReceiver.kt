@@ -2,6 +2,7 @@ package com.mahoote.springbootsms.service
 
 import com.mahoote.springbootsms.configuration.TwilioInitializer
 import com.mahoote.springbootsms.models.SmsRequest
+import com.mahoote.springbootsms.models.entities.UserEntity
 import com.mahoote.springbootsms.repos.SmsReceiver
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service
 @Service("twilioReceiver")
 class TwilioSmsReceiver(
     @Autowired private val questionService: QuestionService,
+    @Autowired private val userService: UserService,
     @Autowired private val senderService: SenderService
     ): SmsReceiver {
 
@@ -25,19 +27,31 @@ class TwilioSmsReceiver(
     }
 
     private fun reply(body: String?, from: String?) {
-        val question = questionService.getQuestionByKeyWord(body)?.question
 
-        if(from != null ) {
-            if(question != null) {
-                val smsRequest = SmsRequest(phoneNumber = from, message = question)
-                senderService.sendSms(smsRequest)
+        from?.let { number ->
+            val text = body?.trim()
+
+            val errorMessage = "I'm sorry, but im not sure what to do. Maybe you should try something else?"
+            var smsRequest = SmsRequest(phoneNumber = number, message = errorMessage)
+
+            if(text == "001_create_user") {
+                if(userService.getUserByPhoneNumber(number) == null) {
+                    userService.saveUser(UserEntity(phoneNumber = number))
+                    val confirmMessage = "User registered!"
+                    SmsRequest(phoneNumber = number, message = confirmMessage)
+                }
             } else {
-                val errorMessage = "I'm sorry, but im not sure what to do. Maybe you should try something else?"
-                val smsRequest = SmsRequest(phoneNumber = from, message = errorMessage)
-                senderService.sendSms(smsRequest)
-            }
-        }
+                val question = questionService.getQuestionByKeyWord(text)?.question
 
+                question?.let { q ->
+                    smsRequest = SmsRequest(phoneNumber = number, message = q)
+                    senderService.sendSms(smsRequest)
+                }
+
+            }
+
+            senderService.sendSms(smsRequest)
+        }
     }
 
 }
