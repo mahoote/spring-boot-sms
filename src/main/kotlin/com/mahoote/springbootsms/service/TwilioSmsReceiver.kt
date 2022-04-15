@@ -31,27 +31,49 @@ class TwilioSmsReceiver(
         from?.let { number ->
             val text = body?.trim()
 
-            val errorMessage = "I'm sorry, but im not sure what to do. Maybe you should try something else?"
+            var errorMessage = "I'm sorry, but im not sure what to do. Maybe you should try something else?"
             var smsRequest = SmsRequest(phoneNumber = number, message = errorMessage)
 
-            if(text == "001_create_user") {
-                if(userService.getUserByPhoneNumber(number) == null) {
-                    userService.saveUser(UserEntity(phoneNumber = number))
-                    val confirmMessage = "User registered!"
-                    smsRequest = SmsRequest(phoneNumber = number, message = confirmMessage)
-                }
-            } else {
-                val question = questionService.getQuestionByKeyWord(text)?.question
+            with(text) {
+                when {
+                    equals("#REGISTER_ME") -> {
+                        smsRequest = registerUser(number, smsRequest, errorMessage)
+                    }
+                    this?.startsWith("@ALL:") == true -> {
+                        val keyWord = text?.substring(5)
+                        smsRequest = SmsRequest(phoneNumber = number, message = keyWord!!)
+                    }
+                    else -> {
+                        val question = questionService.getQuestionByKeyWord(text)?.question
 
-                question?.let { q ->
-                    smsRequest = SmsRequest(phoneNumber = number, message = q)
-                    senderService.sendSms(smsRequest)
-                }
+                        question?.let { q ->
+                            smsRequest = SmsRequest(phoneNumber = number, message = q)
+                        }
 
+                    }
+                }
             }
 
             senderService.sendSms(smsRequest)
         }
+    }
+
+    private fun registerUser(
+        number: String,
+        smsRequest: SmsRequest,
+        errorMessage: String
+    ): SmsRequest {
+        var smsRequest1 = smsRequest
+        var errorMessage1 = errorMessage
+        if (userService.getUserByPhoneNumber(number) == null) {
+            userService.saveUser(UserEntity(phoneNumber = number))
+            val confirmMessage = "You are now registered!"
+            smsRequest1 = SmsRequest(phoneNumber = number, message = confirmMessage)
+        } else {
+            errorMessage1 = "You have already been registered!"
+            smsRequest1 = SmsRequest(phoneNumber = number, message = errorMessage1)
+        }
+        return smsRequest1
     }
 
 }
