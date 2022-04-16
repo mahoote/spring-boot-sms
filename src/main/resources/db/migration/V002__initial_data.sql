@@ -30,4 +30,4 @@ values ('ECHO TEST', 'Working SMS service'),
        ('T5-H', 'Styrke er ikke bare muskler. Tålmodighet tar deg langt.'),
        ('T5-T', 'Påskeegg-spann! Påskeversjonen av den tradisjonelle melkespannøvelsen. Hvert lag velger ut en spiller til å gjennomføre. Spilleren som står lengst, sanker inn øvelsens poeng.'),
        ('T6-H', 'Kropp og sinn fører til vinn'),
-       ('T6-T', 'Byggmester Bob! Utform en stol på gitt tid. Laget med den mest funksjonelle stolen vinner. Taperlaget straffes med drikke. Stol er kun godkjent dersom 5/6 i laget har sittet på den.'),
+       ('T6-T', 'Byggmester Bob! Utform en stol på gitt tid. Laget med den mest funksjonelle stolen vinner. Taperlaget straffes med drikke. Stol er kun godkjent dersom 5/6 i laget har sittet på den.');
